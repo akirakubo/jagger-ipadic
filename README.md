@@ -2,6 +2,8 @@
 
 ## Usage
 
+You can download the latest model in [Releases](releases/).
+
 ### Command Line
 ```
 $ jagger -m ./model/jagger-ipadic
