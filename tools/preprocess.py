@@ -7,6 +7,10 @@ import emoji
 import unicodedata
 import argparse
 from tqdm import tqdm
+import MeCab
+import re
+
+POS_UNK = '#UNK#'
 
 class RemoveEscapeSequence(Filter):
     def __init__(self, *args, **kwargs) -> None:
@@ -54,12 +58,26 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('infile')
     parser.add_argument('--bunkai-model')
+    parser.add_argument('--mecabrc', default="/usr/local/etc/mecabrc")
+    parser.add_argument('--mecab-dict')
+    parser.add_argument('--remove-unk', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.bunkai_model:
         bunkai = Bunkai(path_model=Path(args.bunkai_model))
     else:
         bunkai = Bunkai()
+
+    if args.mecab_dict:
+        tagger = MeCab.Tagger('-r "{}" -d "{}" --unk-feature "{}"'
+                              .format(args.mecabrc,
+                                      args.mecab_dict,
+                                      POS_UNK))
+    else:
+        tagger = MeCab.Tagger('-r "{}" --unk-feature "{}"'
+                              .format(args.mecabrc,
+                                      POS_UNK))
+
     cleaner = Compose([
         document_filters.AcceptJapanese(),
         RemoveEscapeSequence(),
@@ -76,4 +94,8 @@ if __name__=="__main__":
             if line == '':
                 continue
             for sentence in bunkai(line):
-                print(sentence)
+                parsed_sentence = tagger.parse(sentence)
+                if args.remove_unk and parsed_sentence.find(
+                    '\t{}'.format(POS_UNK)) > -1:
+                    continue
+                print(parsed_sentence.rstrip(), end = None)

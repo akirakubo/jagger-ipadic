@@ -16,12 +16,9 @@ nkf, perl, mecab (mecab, mecab-dict-index, mecab-system-eval), and jagger is als
 # Get data from wiki40b
 $ ./get_text.sh
 
-# Prepare mecab-ipadic
-$ ./prepare_ipadic.sh
-
 # Create gold data
 # Training data is divided into 50k sentences.
-# By default, 15 files are randomly choosed and used.
+# By default, 30 files are randomly choosed and used.
 $ ./gen_gold.sh
 
 # You can also change amount of training data.
