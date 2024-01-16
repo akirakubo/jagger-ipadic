@@ -2,7 +2,7 @@
 
 ## Usage
 
-You can download the latest model in [Releases](releases/).
+You can download the latest model in [Releases](https://github.com/akirakubo/jagger-ipadic/releases/).
 
 ### Command Line
 ```
