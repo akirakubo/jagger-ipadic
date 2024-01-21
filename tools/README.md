@@ -8,11 +8,16 @@ This directory has tools used for training.
 $ pip install -r requirements.txt
 ```
 
-nkf, perl, mecab (mecab, mecab-dict-index, mecab-system-eval), and jagger is also required.
+nkf, perl, mecab (mecab, mecab-dict-index, mecab-test-gen, mecab-system-eval), and jagger is also required.
 
 ## Buiding model
 
 ```
+# [optional]
+# If you want to use ipadic-mecab-neologd,
+# run prepare_ipadic_neologd.sh first.
+$ ./prepare_ipadic_neologd.sh
+
 # Get data from wiki40b
 $ ./get_text.sh
 
