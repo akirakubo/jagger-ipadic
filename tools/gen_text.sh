@@ -1,8 +1,18 @@
 #!/bin/bash
 
+WORK_DIR=$(pwd)
 cd $(dirname $0)
 
-IPADIC_DIR=../work/mecab-ipadic-2.7.0-20070801
+if [ -z "$1" ]; then
+    MECAB_DIC_DIR=../work/mecab-ipadic-2.7.0-20070801
+else
+    MECAB_DIC_DIR=${WORK_DIR}/$1
+fi
+
+if [ ! -d ${MECAB_DIC_DIR} ]; then
+    echo "${MECAB_DIC_DIR} not existed."
+    exit 1
+fi
 
 mkdir -p ../work
 
@@ -37,6 +47,6 @@ echo "Preprocessing started"
 find ../work/split -type f -print0 | \
 xargs -0 -P 8 -I{} \
 bash -c "python3 preprocess.py \
---mecab-dict $IPADIC_DIR \
+--mecab-dict $MECAB_DIC_DIR \
 --mecabrc /dev/null \
 --remove-unk {} > \$(dirname {})/preprocess.\$(basename {}).mecab"
