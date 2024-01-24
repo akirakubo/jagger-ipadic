@@ -40,9 +40,6 @@ split \
 ../work/validation.txt \
 ../work/split/validation.
 
-echo "Preparing mecab-ipadic started"
-./prepare_ipadic.sh
-
 echo "Preprocessing started"
 find ../work/split -type f -print0 | \
 xargs -0 -P 8 -I{} -S 512 \

@@ -15,11 +15,12 @@ fi
 
 MODEL=${2:-../model/jagger-ipadic}
 SPLIT_DIR=../work/split
+TRAIN_JAGGER=${3:-../work/jagger/src/train_jagger}
 mkdir -p $MODEL
 rm $MODEL/patterns*
 
 echo "Training"
-train_jagger -d <(cat $MECAB_DIC_DIR/*.csv) ../work/train.mecab > $MODEL/patterns
+$TRAIN_JAGGER -d <(cat $MECAB_DIC_DIR/*.csv) ../work/train.mecab > $MODEL/patterns
 
 echo "Evaluation"
 cat $SPLIT_DIR/preprocess.test.*.mecab > ../work/preprocess.test.mecab

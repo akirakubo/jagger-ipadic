@@ -60,18 +60,18 @@ EOL
 
 * Dataset: test data of wiki40b (after [pre-processed](tools/preprocess.py) with `--remove-unk`)
 * Gold data: output from mecab with mecab-ipadic-2.7.0-20070801 is regarded as gold data
-* Predicted data: output from jagger with jagger-ipadic-0.2
+* Predicted data: output from jagger with jagger-ipadic-0.3 trained by [patched train_jagger](patch/jagger/README.md)
 
 ```
               precision          recall         F
-LEVEL 0:    97.2484(10486265/10782971) 92.9519(10486265/11281387) 95.0516
-LEVEL 1:    96.8835(10446916/10782971) 92.6031(10446916/11281387) 94.6949
-LEVEL 2:    96.0927(10361647/10782971) 91.8473(10361647/11281387) 93.9220
-LEVEL 3:    95.8627(10336849/10782971) 91.6275(10336849/11281387) 93.6973
-LEVEL ALL: 95.7733(10327205/10782971) 91.5420(10327205/11281387) 93.6098
+LEVEL 0:    99.5261(11231041/11284522) 99.5537(11231041/11281387) 99.5399
+LEVEL 1:    99.1735(11191261/11284522) 99.2011(11191261/11281387) 99.1873
+LEVEL 2:    98.4122(11105348/11284522) 98.4396(11105348/11281387) 98.4259
+LEVEL 3:    98.1923(11080529/11284522) 98.2196(11080529/11281387) 98.2059
+LEVEL ALL: 98.1069(11070900/11284522) 98.1342(11070900/11281387) 98.1206
 ```
 
-## How to train your model
+## How to Train Your Model
 
 See [tools/README.md](tools/README.md).
 
