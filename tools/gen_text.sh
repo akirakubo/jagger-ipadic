@@ -45,7 +45,7 @@ echo "Preparing mecab-ipadic started"
 
 echo "Preprocessing started"
 find ../work/split -type f -print0 | \
-xargs -0 -P 8 -I{} -s 512 \
+xargs -0 -P 8 -I{} -S 512 \
 bash -c "python3 preprocess.py \
 --mecab-dict $MECAB_DIC_DIR \
 --mecabrc /dev/null \
