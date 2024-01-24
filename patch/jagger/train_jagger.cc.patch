@@ -1,0 +1,45 @@
+--- jagger-2023-02-18/src/train_jagger.cc	2023-02-18 06:47:05
++++ jagger-2023-02-18-changed/src/train_jagger.cc	2024-01-25 07:44:28
+@@ -7,7 +7,7 @@ static const char* chars_[] = {"０１２３４５６�
+ #include "config.h"
+ #endif
+ 
+-static const char* chars_[] = {"０１２３４５６７８９〇一二三四五六七八九十百千万億兆数・", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ＠：／．", "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺーヽヾヿ", 0};
++// static const char* chars_[] = {"０１２３４５６７８９〇一二三四五六七八九十百千万億兆数・", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ＠：／．", "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺーヽヾヿ", 0};
+ 
+ struct triple {
+   int first, second, third;
+@@ -52,6 +52,7 @@ int main (int argc, char** argv) {
+     fi2c.resize (fbag.size (), 0);
+   }
+   std::fprintf (stderr, "done; %ld words, %ld features\n", si2fi2fi.size (), fbag.size ());
++  /*
+   std::fprintf (stderr, "regarding num / alpha / kana as seed patterns...");
+   for (int i (0), b (0); chars_[i]; ++i) // read seeds from num / alpha / kana
+     for (const char *p = &chars_[i][0]; *p; p += b) {
+@@ -59,12 +60,14 @@ int main (int argc, char** argv) {
+       pbag_.to_i (p, b);
+     }
+   pi2fi2sc.resize (pbag_.size ());
++  */
+   const int num_seed = static_cast <int> (pbag_.size ());
+   std::fprintf (stderr, "done; # seeds = %d\n", num_seed);
+   { // enumerate patterns
+     std::fprintf (stderr, "mining patterns from training data...");
+     std::vector <triple> tokens, pis;
+     std::string sent;
++    int corpus_lines = 0;
+     simple_reader reader (train.c_str ());
+     while (const size_t len = reader.gets (&line)) {
+       if (std::strncmp (line, "EOS\n", 4) == 0) {
+@@ -98,6 +101,10 @@ int main (int argc, char** argv) {
+         tokens.push_back (triple (f - 1 - t, fbag.to_i (f, end - f), fbag.to_i (f, p - f)));
+         sent += std::string (t, f - 1 - t);
+       }
++      corpus_lines++;
++      if(corpus_lines % 1000000 == 0) {
++        std::fprintf (stderr, "%d lines loaded\n", corpus_lines);
++      }
+     }
+   }
+   std::fprintf (stderr, "done; %ld pattern candidates\n", pbag_.size ());
