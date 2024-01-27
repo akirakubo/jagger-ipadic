@@ -25,5 +25,5 @@ $TRAIN_JAGGER -d <(cat $MECAB_DIC_DIR/*.csv) ../work/train.mecab > $MODEL/patter
 echo "Evaluation"
 cat $SPLIT_DIR/preprocess.test.*.mecab > ../work/preprocess.test.mecab
 mecab-test-gen < ../work/preprocess.test.mecab > ../work/preprocess.test.txt
-jagger -m $MODEL -f < ../work/preprocess.test.txt > ../work/preprocess.test.jagger
-mecab-system-eval -l "0 1 2 3 -1" ../work/preprocess.test.jagger ../work/preprocess.test.mecab | tee $MODEL/RESULT
+jagger -m $MODEL -f < ../work/preprocess.test.txt > ../work/preprocess.test.JAG
+mecab-system-eval -l "0 1 2 3 -1" ../work/preprocess.test.JAG ../work/preprocess.test.mecab | tee $MODEL/RESULT
