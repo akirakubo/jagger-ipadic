@@ -14,6 +14,12 @@ if [ ! -d ${MECAB_DIC_DIR} ]; then
     exit 1
 fi
 
+if [ "$(uname)" == 'Darwin' ]; then
+    XARGS="xargs -S 512"
+else
+    XARGS="xargs"
+fi
+
 mkdir -p ../work
 
 echo "Download started"
@@ -42,7 +48,7 @@ split \
 
 echo "Preprocessing started"
 find ../work/split -type f -print0 | \
-xargs -0 -P 8 -I{} -S 512 \
+$XARGS -0 -P 8 -I{} \
 bash -c "python3 preprocess.py \
 --mecab-dict $MECAB_DIC_DIR \
 --mecabrc /dev/null \
