@@ -65,7 +65,6 @@ tensorflow==2.15.0
 tensorflow-datasets==4.9.3
 tensorflow-estimator==2.15.0
 tensorflow-io-gcs-filesystem==0.34.0
-tensorflow-macos==2.15.0
 tensorflow-metadata==1.14.0
 termcolor==2.4.0
 tokenizers==0.15.0
