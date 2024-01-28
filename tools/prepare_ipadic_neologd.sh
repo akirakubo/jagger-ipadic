@@ -6,6 +6,8 @@ IPADIC_FILE=../work/mecab-ipadic-2.7.0-20070801.tar.gz
 NEOLOGD_DIR=../work/mecab-ipadic-neologd
 NEOLOGD_REPO=https://github.com/neologd/mecab-ipadic-neologd
 
+mkdir ../work
+
 # clone repository
 git clone --depth 1 $NEOLOGD_REPO $NEOLOGD_DIR
 
